@@ -49,7 +49,6 @@ db.on('disconnected', () => console.log('Connection to Sciprciore MongoDB ended'
 //////      Controllers     /////////
 
 app.post('/user', async (req, res) => {
-    console.log(req.body);
     try {
         const newUser = await User.create(req.body);
         res.json(newUser);
@@ -60,8 +59,19 @@ app.post('/user', async (req, res) => {
 });
 
 app.put('/user/:id', async (req, res) => {
-    const updatedUser = User.update({authId: req.params.id}, {$set: {authId: req.body}});
+    console.log(req.body);
+    const updatedUser = await User.update({authId: req.params.id}, {$push: {characters: req.body.character}});
     res.json(updatedUser);
+});
+
+app.get('/user/:id', async (req, res) => {
+    try {
+        const user = await User.find({authId: req.params.id});
+        res.json(user);
+    }
+    catch (e) {
+        res.send(e);
+    }
 })
 
 
