@@ -50,7 +50,7 @@ db.on('disconnected', () => console.log('Connection to Sciprciore MongoDB ended'
 
 app.delete('/user/:id', async (req, res) => {
     try {
-        const deleteUser = await User.deleteOne({_id: req.params.id})
+        const deleteUser = await User.deleteOne({authId: req.params.id})
         res.json(deleteUser)
     } catch (e) {
         console.log(e)
