@@ -48,6 +48,15 @@ db.on('disconnected', () => console.log('Connection to Sciprciore MongoDB ended'
 /////////////////////////////////////
 //////      Controllers     /////////
 
+app.delete('/user/:id', async (req, res) => {
+    try {
+        const deleteUser = await User.deleteOne({_id: req.params.id})
+        res.json(deleteUser)
+    } catch (e) {
+        console.log(e)
+    }
+})
+
 app.post('/user', async (req, res) => {
     try {
         const newUser = await User.create(req.body);
